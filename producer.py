@@ -34,6 +34,7 @@ class OrderProducer:
         
         self.producer = AvroProducer(
             self.producer_config,
+            default_key_schema=avro.loads('{"type": "string"}'),
             default_value_schema=self.value_schema
         )
         
