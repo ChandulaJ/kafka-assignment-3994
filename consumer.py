@@ -59,9 +59,9 @@ class OrderConsumer:
         Callback for DLQ message delivery
         """
         if err is not None:
-            print(f'    ❌ DLQ delivery failed: {err}')
+            print(f'     DLQ delivery failed: {err}')
         else:
-            print(f'    ✅ Message sent to DLQ topic: {msg.topic()}')
+            print(f'     Message sent to DLQ topic: {msg.topic()}')
     
     def send_to_dlq(self, message, error_reason):
         """
@@ -82,7 +82,7 @@ class OrderConsumer:
             'timestamp': time.time()
         }
         
-        print(f"\n  ⚠️  Sending to DLQ: {error_reason}")
+        print(f"\n   Sending to DLQ: {error_reason}")
         
         self.dlq_producer.produce(
             topic=dlq_topic,
@@ -123,11 +123,11 @@ class OrderConsumer:
             
             # Display processed order
             print(f"\n{'='*60}")
-            print(f"📨 Processed Order:")
+            print(f" Processed Order:")
             print(f"   Order ID: {order_id}")
             print(f"   Product:  {product}")
             print(f"   Price:    ${price:.2f}")
-            print(f"\n📊 Real-time Aggregation:")
+            print(f"\n Real-time Aggregation:")
             print(f"   Total Orders Processed: {self.message_count}")
             print(f"   Total Revenue:          ${self.total_price:.2f}")
             print(f"   Running Average Price:  ${self.running_average:.2f}")
@@ -136,7 +136,7 @@ class OrderConsumer:
             return True
             
         except Exception as e:
-            print(f"\n  ❌ Processing error: {e}")
+            print(f"\n   Processing error: {e}")
             return False
     
     def handle_message(self, message):
@@ -160,7 +160,7 @@ class OrderConsumer:
             
             if self.retry_counts[message_key] < self.max_retries:
                 # Retry
-                print(f"  🔄 Retry attempt {self.retry_counts[message_key]}/{self.max_retries}")
+                print(f"   Retry attempt {self.retry_counts[message_key]}/{self.max_retries}")
                 time.sleep(1)  # Backoff before retry
                 
                 # Retry processing
@@ -187,10 +187,10 @@ class OrderConsumer:
         Args:
             topic: Kafka topic to consume from
         """
-        print(f"🚀 Starting consumer for topic '{topic}'")
-        print(f"👥 Consumer Group: {self.consumer_config['group.id']}")
-        print(f"🔄 Max Retries: {self.max_retries}")
-        print(f"📬 DLQ Topic: orders-dlq")
+        print(f" Starting consumer for topic '{topic}'")
+        print(f" Consumer Group: {self.consumer_config['group.id']}")
+        print(f" Max Retries: {self.max_retries}")
+        print(f" DLQ Topic: orders-dlq")
         print("-" * 60)
         
         # Subscribe to topic
@@ -206,9 +206,9 @@ class OrderConsumer:
                 
                 if msg.error():
                     if msg.error().code() == KafkaError._PARTITION_EOF:
-                        print(f'📭 Reached end of partition {msg.partition()}')
+                        print(f' Reached end of partition {msg.partition()}')
                     else:
-                        print(f'❌ Consumer error: {msg.error()}')
+                        print(f' Consumer error: {msg.error()}')
                     continue
                 
                 # Handle the message with retry logic
@@ -218,9 +218,9 @@ class OrderConsumer:
                 self.consumer.commit(asynchronous=False)
                 
         except KeyboardInterrupt:
-            print("\n\n⚠️  Consumer interrupted by user")
+            print("\n\n  Consumer interrupted by user")
         except Exception as e:
-            print(f"\n❌ Consumer error: {e}")
+            print(f"\n Consumer error: {e}")
         finally:
             # Clean up
             print("\n🧹 Closing consumer and flushing DLQ producer...")
@@ -229,7 +229,7 @@ class OrderConsumer:
             
             # Print final statistics
             print("\n" + "=" * 60)
-            print("📊 Final Statistics:")
+            print(" Final Statistics:")
             print(f"   Total Orders Processed: {self.message_count}")
             print(f"   Total Revenue:          ${self.total_price:.2f}")
             if self.message_count > 0:
@@ -242,11 +242,11 @@ def main():
     Main function to run the consumer
     """
     print("=" * 60)
-    print("🏪 Kafka Order Consumer with Avro Deserialization")
+    print(" Kafka Order Consumer with Avro Deserialization")
     print("=" * 60)
     
     # Wait for Kafka to be ready
-    print("\n⏳ Waiting 10 seconds for Kafka and Schema Registry to be ready...")
+    print("\n Waiting 10 seconds for Kafka and Schema Registry to be ready...")
     time.sleep(10)
     
     # Create and run consumer

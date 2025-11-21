@@ -45,7 +45,7 @@ def monitor_topic(topic='orders', bootstrap_servers='localhost:9092'):
                 if msg.error().code() == KafkaError._PARTITION_EOF:
                     continue
                 else:
-                    print(f"❌ Error: {msg.error()}")
+                    print(f" Error: {msg.error()}")
                 continue
             
             message_count += 1
@@ -56,15 +56,15 @@ def monitor_topic(topic='orders', bootstrap_servers='localhost:9092'):
             print(f"🔑 Key:       {msg.key().decode('utf-8') if msg.key() else 'None'}")
             print(f"📦 Value:     {msg.value()}")
             print(f"🎯 Partition: {msg.partition()}")
-            print(f"📊 Offset:    {msg.offset()}")
+            print(f" Offset:    {msg.offset()}")
             print(f"🕐 Timestamp: {msg.timestamp()[1] if msg.timestamp()[0] != -1 else 'N/A'}")
     
     except KeyboardInterrupt:
-        print("\n\n⚠️  Monitor interrupted by user")
+        print("\n\n  Monitor interrupted by user")
     finally:
         consumer.close()
         print(f"\n{'='*60}")
-        print(f"📊 Total Messages Received: {message_count}")
+        print(f" Total Messages Received: {message_count}")
         print("=" * 60)
 
 

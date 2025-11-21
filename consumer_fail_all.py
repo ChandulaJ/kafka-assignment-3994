@@ -53,9 +53,9 @@ class FailAllConsumer:
     def delivery_report(self, err, msg):
         """Callback for DLQ message delivery"""
         if err is not None:
-            print(f'    ❌ DLQ delivery failed: {err}')
+            print(f'     DLQ delivery failed: {err}')
         else:
-            print(f'    ✅ Message sent to DLQ topic: {msg.topic()}')
+            print(f'     Message sent to DLQ topic: {msg.topic()}')
     
     def send_to_dlq(self, message, error_reason):
         """
@@ -76,7 +76,7 @@ class FailAllConsumer:
             'timestamp': time.time()
         }
         
-        print(f"\n  ⚠️  Sending to DLQ: {error_reason}")
+        print(f"\n    Sending to DLQ: {error_reason}")
         
         self.dlq_producer.produce(
             topic=dlq_topic,
@@ -106,7 +106,7 @@ class FailAllConsumer:
             self.total_messages += 1
             
             print(f"\n{'='*60}")
-            print(f"📨 Attempting to process order:")
+            print(f" Attempting to process order:")
             print(f"   Order ID: {order_id}")
             print(f"   Product:  {product}")
             print(f"   Price:    ${price:.2f}")
@@ -115,7 +115,7 @@ class FailAllConsumer:
             raise Exception("INTENTIONAL FAILURE - This consumer fails all messages!")
             
         except Exception as e:
-            print(f"\n  ❌ Processing error: {e}")
+            print(f"\n  Processing error: {e}")
             self.failed_messages += 1
             return False
     
@@ -141,7 +141,7 @@ class FailAllConsumer:
             # Retry up to max_retries times
             while not success and self.retry_counts[message_key] < self.max_retries:
                 self.retry_counts[message_key] += 1
-                print(f"  🔄 Retry attempt {self.retry_counts[message_key]}/{self.max_retries}")
+                print(f"   Retry attempt {self.retry_counts[message_key]}/{self.max_retries}")
                 time.sleep(1)
                 
                 # Retry processing (will fail again)
@@ -163,13 +163,13 @@ class FailAllConsumer:
             topic: Kafka topic to consume from
         """
         print("=" * 60)
-        print("🚨 FAIL-ALL CONSUMER - SENDS ALL MESSAGES TO DLQ")
+        print(" FAIL-ALL CONSUMER - SENDS ALL MESSAGES TO DLQ")
         print("=" * 60)
-        print(f"🚀 Starting consumer for topic '{topic}'")
-        print(f"👥 Consumer Group: {self.consumer_config['group.id']}")
-        print(f"🔄 Max Retries: {self.max_retries}")
-        print(f"📬 DLQ Topic: orders-dlq")
-        print("⚠️  WARNING: This consumer intentionally fails ALL messages!")
+        print(f" Starting consumer for topic '{topic}'")
+        print(f" Consumer Group: {self.consumer_config['group.id']}")
+        print(f" Max Retries: {self.max_retries}")
+        print(f" DLQ Topic: orders-dlq")
+        print("  WARNING: This consumer intentionally fails ALL messages!")
         print("-" * 60)
         
         # Subscribe to topic
@@ -187,7 +187,7 @@ class FailAllConsumer:
                     if msg.error().code() == KafkaError._PARTITION_EOF:
                         print(f'📭 Reached end of partition {msg.partition()}')
                     else:
-                        print(f'❌ Consumer error: {msg.error()}')
+                        print(f' Consumer error: {msg.error()}')
                     continue
                 
                 # Handle the message (will fail and go to DLQ)
@@ -197,9 +197,9 @@ class FailAllConsumer:
                 self.consumer.commit(asynchronous=False)
                 
         except KeyboardInterrupt:
-            print("\n\n⚠️  Consumer interrupted by user")
+            print("\n\n  Consumer interrupted by user")
         except Exception as e:
-            print(f"\n❌ Consumer error: {e}")
+            print(f"\n Consumer error: {e}")
         finally:
             # Clean up
             print("\n🧹 Closing consumer and flushing DLQ producer...")
@@ -208,7 +208,7 @@ class FailAllConsumer:
             
             # Print final statistics
             print("\n" + "=" * 60)
-            print("📊 Final Statistics:")
+            print(" Final Statistics:")
             print(f"   Total Messages Received:  {self.total_messages}")
             print(f"   Total Messages Failed:    {self.failed_messages}")
             print(f"   Total Messages Sent to DLQ: {self.dlq_messages}")
@@ -220,11 +220,11 @@ def main():
     Main function to run the fail-all consumer
     """
     print("=" * 60)
-    print("🚨 Kafka Fail-All Consumer - DLQ Demonstration")
+    print(" Kafka Fail-All Consumer - DLQ Demonstration")
     print("=" * 60)
     
     # Wait for Kafka to be ready
-    print("\n⏳ Waiting 10 seconds for Kafka and Schema Registry to be ready...")
+    print("\n Waiting 10 seconds for Kafka and Schema Registry to be ready...")
     time.sleep(10)
     
     # Create and run consumer

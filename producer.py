@@ -55,7 +55,7 @@ class OrderProducer:
             msg: Message that was produced
         """
         if err is not None:
-            print(f'❌ Message delivery failed: {err}')
+            print(f' Message delivery failed: {err}')
         else:
             print(f'✅ Message delivered to {msg.topic()} [partition {msg.partition()}] at offset {msg.offset()}')
     
@@ -83,8 +83,8 @@ class OrderProducer:
             num_messages: Number of messages to produce
             interval: Time interval (seconds) between messages
         """
-        print(f"🚀 Starting to produce {num_messages} orders to topic '{topic}'")
-        print(f"📊 Message interval: {interval} second(s)")
+        print(f" Starting to produce {num_messages} orders to topic '{topic}'")
+        print(f" Message interval: {interval} second(s)")
         print("-" * 60)
         
         try:
@@ -107,14 +107,14 @@ class OrderProducer:
                 time.sleep(interval)
             
             # Wait for all messages to be delivered
-            print("\n⏳ Flushing remaining messages...")
+            print("\n Flushing remaining messages...")
             self.producer.flush()
             print(f"\n✨ Successfully produced {num_messages} orders!")
             
         except KeyboardInterrupt:
-            print("\n⚠️  Producer interrupted by user")
+            print("\n  Producer interrupted by user")
         except Exception as e:
-            print(f"\n❌ Error producing messages: {e}")
+            print(f"\n Error producing messages: {e}")
         finally:
             self.producer.flush()
 
@@ -124,11 +124,11 @@ def main():
     Main function to run the producer
     """
     print("=" * 60)
-    print("🏭 Kafka Order Producer with Avro Serialization")
+    print(" Kafka Order Producer with Avro Serialization")
     print("=" * 60)
     
     # Wait for Kafka to be ready
-    print("\n⏳ Waiting 5 seconds for Kafka to be ready...")
+    print("\n Waiting 5 seconds for Kafka to be ready...")
     time.sleep(5)
     
     # Create producer
@@ -144,7 +144,7 @@ def main():
                 interval=2
             )
             print("\n" + "=" * 60)
-            print("⏸️  Batch complete. Waiting 5 seconds before next batch...")
+            print("  Batch complete. Waiting 5 seconds before next batch...")
             print("=" * 60)
             time.sleep(5)
     except KeyboardInterrupt:

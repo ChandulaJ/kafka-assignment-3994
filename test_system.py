@@ -21,10 +21,10 @@ def check_docker():
             print("  ✅ Docker is running")
             return True
         else:
-            print("  ❌ Docker is not running")
+            print("   Docker is not running")
             return False
     except FileNotFoundError:
-        print("  ❌ Docker is not installed")
+        print("   Docker is not installed")
         return False
 
 
@@ -38,25 +38,25 @@ def check_docker_compose():
         if 'kafka' in result.stdout and 'Up' in result.stdout:
             print("  ✅ Kafka is running")
         else:
-            print("  ❌ Kafka is not running")
+            print("   Kafka is not running")
             print("  💡 Run: docker-compose up -d")
             return False
             
         if 'zookeeper' in result.stdout and 'Up' in result.stdout:
             print("  ✅ Zookeeper is running")
         else:
-            print("  ❌ Zookeeper is not running")
+            print("   Zookeeper is not running")
             return False
             
         if 'schema-registry' in result.stdout and 'Up' in result.stdout:
             print("  ✅ Schema Registry is running")
         else:
-            print("  ❌ Schema Registry is not running")
+            print("   Schema Registry is not running")
             return False
             
         return True
     except FileNotFoundError:
-        print("  ❌ docker-compose is not installed")
+        print("   docker-compose is not installed")
         return False
 
 
@@ -75,13 +75,13 @@ def check_kafka_connection():
             print("  ✅ Kafka broker is accessible")
             return True
         else:
-            print("  ❌ Cannot connect to Kafka broker")
+            print("   Cannot connect to Kafka broker")
             return False
     except subprocess.TimeoutExpired:
-        print("  ❌ Kafka broker connection timeout")
+        print("   Kafka broker connection timeout")
         return False
     except Exception as e:
-        print(f"  ❌ Error: {e}")
+        print(f"   Error: {e}")
         return False
 
 
@@ -99,10 +99,10 @@ def check_schema_registry():
                 print("  📚 No schemas registered yet (this is normal before first run)")
             return True
         else:
-            print(f"  ❌ Schema Registry returned status code: {response.status_code}")
+            print(f"   Schema Registry returned status code: {response.status_code}")
             return False
     except requests.exceptions.RequestException as e:
-        print(f"  ❌ Cannot connect to Schema Registry: {e}")
+        print(f"   Cannot connect to Schema Registry: {e}")
         return False
 
 
@@ -126,13 +126,13 @@ def check_topics():
                 for topic in topics:
                     print(f"     - {topic}")
             else:
-                print("  ⚠️  No topics found yet (will be auto-created)")
+                print("    No topics found yet (will be auto-created)")
             return True
         else:
-            print("  ❌ Cannot list topics")
+            print("   Cannot list topics")
             return False
     except Exception as e:
-        print(f"  ❌ Error: {e}")
+        print(f"   Error: {e}")
         return False
 
 
@@ -151,7 +151,7 @@ def check_python_dependencies():
         
         return True
     except ImportError as e:
-        print(f"  ❌ Missing dependency: {e}")
+        print(f"   Missing dependency: {e}")
         print("  💡 Run: pip install -r requirements.txt")
         return False
 
@@ -173,7 +173,7 @@ def check_files():
             with open(file, 'r'):
                 print(f"  ✅ {file}")
         except FileNotFoundError:
-            print(f"  ❌ {file} not found")
+            print(f"   {file} not found")
             all_exist = False
     
     return all_exist
@@ -201,19 +201,19 @@ def run_all_checks():
         try:
             results[check_name] = check_func()
         except Exception as e:
-            print(f"\n❌ Unexpected error in {check_name}: {e}")
+            print(f"\n Unexpected error in {check_name}: {e}")
             results[check_name] = False
     
     # Print summary
     print("\n" + "=" * 60)
-    print("📊 Test Summary")
+    print(" Test Summary")
     print("=" * 60)
     
     passed = sum(1 for v in results.values() if v)
     total = len(results)
     
     for check_name, result in results.items():
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = "✅ PASS" if result else " FAIL"
         print(f"{status} - {check_name}")
     
     print("\n" + "=" * 60)
@@ -227,7 +227,7 @@ def run_all_checks():
         print("=" * 60)
         return 0
     else:
-        print("⚠️  Some checks failed. Please fix the issues above.")
+        print("  Some checks failed. Please fix the issues above.")
         print("=" * 60)
         return 1
 

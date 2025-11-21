@@ -9,18 +9,18 @@ echo ""
 # Check if Docker is running
 echo "📦 Checking Docker..."
 if ! docker info > /dev/null 2>&1; then
-    echo "❌ Docker is not running. Please start Docker and try again."
+    echo " Docker is not running. Please start Docker and try again."
     exit 1
 fi
 echo "✅ Docker is running"
 echo ""
 
 # Start Docker Compose services
-echo "🚀 Starting Kafka infrastructure..."
+echo " Starting Kafka infrastructure..."
 docker-compose up -d
 
 echo ""
-echo "⏳ Waiting for services to be ready (30 seconds)..."
+echo " Waiting for services to be ready (30 seconds)..."
 sleep 30
 
 # Check service health
