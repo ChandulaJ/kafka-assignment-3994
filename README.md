@@ -2,7 +2,7 @@
 
 A complete Kafka-based system demonstrating real-time order processing with Avro serialization, featuring real-time aggregation, retry logic, and Dead Letter Queue (DLQ) handling.
 
-## 🎯 Features
+##  Features
 
 - **Avro Serialization**: All messages use Apache Avro for efficient serialization/deserialization
 - **Real-time Aggregation**: Running average calculation of order prices
@@ -11,7 +11,7 @@ A complete Kafka-based system demonstrating real-time order processing with Avro
 - **Schema Registry**: Centralized schema management for Avro schemas
 - **Docker Support**: Complete containerized setup with Docker Compose
 
-## 📋 Order Message Schema
+##  Order Message Schema
 
 Each order message follows this Avro schema (`schemas/order.avsc`):
 
@@ -40,7 +40,7 @@ Each order message follows this Avro schema (`schemas/order.avsc`):
 }
 ```
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌──────────────┐         ┌─────────────┐         ┌──────────────┐
@@ -66,7 +66,7 @@ Each order message follows this Avro schema (`schemas/order.avsc`):
 4. **Producer**: Generates random order messages with Avro serialization
 5. **Consumer**: Consumes orders with retry logic, aggregation, and DLQ handling
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -77,7 +77,7 @@ Each order message follows this Avro schema (`schemas/order.avsc`):
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ChandulaJ/kafka-assignment-3994.git
 cd kafka-assignment-3994
 ```
 
@@ -154,12 +154,12 @@ The producer will:
 - Send messages to the `orders` topic
 - Display delivery confirmations
 
-## 📊 Real-time Aggregation
+##  Real-time Aggregation
 
 The consumer maintains a **running average** of order prices:
 
 ```
-📊 Real-time Aggregation:
+ Real-time Aggregation:
    Total Orders Processed: 15
    Total Revenue:          $3,245.67
    Running Average Price:  $216.38
@@ -167,7 +167,7 @@ The consumer maintains a **running average** of order prices:
 
 This updates with each successfully processed message.
 
-## 🔄 Retry Logic
+## Retry Logic
 
 The consumer implements intelligent retry logic:
 
@@ -177,12 +177,12 @@ The consumer implements intelligent retry logic:
 
 Example output:
 ```
-❌ Processing error: Simulated temporary processing failure
-🔄 Retry attempt 1/3
-✅ Processed Order: ...
+ Processing error: Simulated temporary processing failure
+Retry attempt 1/3
+Processed Order: ...
 ```
 
-## ⚠️ Dead Letter Queue (DLQ)
+##  Dead Letter Queue (DLQ)
 
 Messages that fail after maximum retries are sent to `orders-dlq` topic with metadata:
 
@@ -206,7 +206,7 @@ docker exec -it kafka kafka-console-consumer \
   --from-beginning
 ```
 
-## 🧪 Testing the System
+##  Testing the System
 
 ### Test 1: Normal Operation
 
@@ -239,7 +239,7 @@ docker exec -it kafka kafka-console-consumer \
 docker exec -it kafka kafka-topics --list --bootstrap-server localhost:9092
 ```
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 kafka-assignment-3994/
@@ -307,7 +307,7 @@ docker exec -it kafka kafka-consumer-groups \
   --describe
 ```
 
-## 🧹 Cleanup
+## Cleanup
 
 ### Stop Services
 
@@ -327,7 +327,7 @@ docker-compose down -v
 deactivate
 ```
 
-## 📚 Key Concepts Demonstrated
+## Key Concepts Demonstrated
 
 1. **Avro Serialization**: Efficient binary serialization with schema evolution support
 2. **Schema Registry**: Centralized schema management
@@ -338,7 +338,7 @@ deactivate
 7. **Offset Management**: Manual commit for better control
 8. **Error Handling**: Comprehensive error handling and logging
 
-## 🎓 Learning Outcomes
+##  Learning Outcomes
 
 - Understanding Kafka architecture and components
 - Implementing Avro serialization in Python
@@ -347,14 +347,14 @@ deactivate
 - Real-time data aggregation and analytics
 - Docker containerization for Kafka ecosystem
 
-## 📝 Additional Resources
+##  Additional Resources
 
 - [Apache Kafka Documentation](https://kafka.apache.org/documentation/)
 - [Confluent Kafka Python](https://docs.confluent.io/kafka-clients/python/current/overview.html)
 - [Apache Avro](https://avro.apache.org/docs/)
 - [Schema Registry](https://docs.confluent.io/platform/current/schema-registry/index.html)
 
-## 👨‍💻 Development
+##  Development
 
 ### Modifying the Producer
 
